@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "Business";
+
+package applicationUser;
+
+service Users {
+  rpc CreateUser (UserRequest) returns (UserResponse);
+  rpc UpdateUser (UserRequest) returns (UserResponse);
+  rpc DeleteUser (UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+  string uuid = 1;
+  string nombre = 2;
+  string fecha_nacimiento = 3;
+  string sexo = 4;
+  bool estado = 5;
+}
+
+message UserResponse {
+  string uuid = 1;
+  bool estado = 2;
+}

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "Data\Data.csproj", "{DD8A32A8-51F8-475D-85B5-575C13B0EE70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{06B938DC-BD4A-4180-8BD6-281FF52FA1C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{39694555-17F2-4AC6-B4B8-95F49930070D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD8A32A8-51F8-475D-85B5-575C13B0EE70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD8A32A8-51F8-475D-85B5-575C13B0EE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD8A32A8-51F8-475D-85B5-575C13B0EE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD8A32A8-51F8-475D-85B5-575C13B0EE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06B938DC-BD4A-4180-8BD6-281FF52FA1C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06B938DC-BD4A-4180-8BD6-281FF52FA1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06B938DC-BD4A-4180-8BD6-281FF52FA1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06B938DC-BD4A-4180-8BD6-281FF52FA1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39694555-17F2-4AC6-B4B8-95F49930070D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39694555-17F2-4AC6-B4B8-95F49930070D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39694555-17F2-4AC6-B4B8-95F49930070D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39694555-17F2-4AC6-B4B8-95F49930070D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5B8A9C1-1752-4630-A6A9-43E9C3D79A14}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,60 @@
+﻿@model Presentation.Models.RegisterModel
+<main>
+    @{
+        ViewData["Title"] = "Registrar Usuario JWT";
+    }
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">@ViewData["Title"]</h2>
+                        @if (ViewBag.UserMessage != null && ViewBag.UserMessageType != null)
+                        {
+                            <div class="alert alert-@(ViewBag.UserMessageType) fade show" role="alert" id="userMessage">
+                                @ViewBag.UserMessage
+                            </div>
+                        }                     
+
+                        <form asp-controller="Auth" asp-action="Register" method="post" id="jwtRegisterForm">
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input asp-for="UserName" class="form-control" placeholder="Nombre de usuario" required>
+                                <label asp-for="UserName" class="text-center"></label>
+                                <span asp-validation-for="UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input asp-for="Email" class="form-control text-lowercase" placeholder="E-mail" required>
+                                <label asp-for="Email" class="text-center"></label>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input asp-for="PhoneNumber" class="form-control" placeholder="Número de teléfono">
+                                <label asp-for="PhoneNumber" class="text-center"></label>
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input type="password" asp-for="Password" class="form-control form-control-sm" placeholder="Contraseña" required>
+                                <label asp-for="Password" class="text-center"></label>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark btn-sm">Registrar</button>
+                            </div>
+                        </form>
+                        <a asp-area="" asp-controller="Home" asp-action="ViewLogin">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    window.addEventListener('load', function () {
+        var tiempoCarga = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        evento('evento_detalle', { accion: 'pagina_completamente_cargada', detalle: 'Registrar Usuario JWT', tiempoCarga: tiempoCarga });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        evento('evento_detalle', { accion: 'pagina_cargada', detalle: 'Registrar Usuario JWT' });
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@model Data.Models.Users
+@{
+    ViewData["Title"] = @ViewBag.Title;
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("ViewListUsers", "Home")">Lista de Usuarios</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewBag.ButtonLabel</li>
+    </ol>
+</nav>
+
+<main>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body">
+                        <form method="post" asp-action="@ViewBag.FormAction">
+                            @if (TempData["UserMessage"] != null && TempData["UserMessageType"] != null)
+                            {
+                                <div class="alert alert-@TempData["UserMessageType"] fade show" role="alert" id="userMessage">
+                                    @TempData["UserMessage"]
+                                </div>
+                            }
+                            <h2 class="card-title text-center mb-4">@ViewBag.Title</h2>
+
+                            @if (@ViewBag.Action == "Edit")
+                            {
+                                <input type="hidden" asp-for="Uuid" value="@Model.Uuid" />
+
+                                <div class="form-floating mb-3 d-flex justify-content-center">
+                                    <input type="text" class="form-control" id="nombre" asp-for="Nombre" value="@Model.Nombre" placeholder="Ingresar nombre" required>
+                                    <label for="nombre">Nombre</label>
+                                </div>
+
+                                <div class="form-floating mb-3 d-flex justify-content-center">
+                                    <input type="date" class="form-control" id="fechaNacimiento" value="@Model.FechaNacimiento?.ToString("yyyy-MM-dd")" asp-for="FechaNacimiento">
+                                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                                </div>
+
+                                <div class="form-floating mb-3 d-flex justify-content-center">
+                                    <select class="form-control" id="sexo" asp-for="Sexo">
+                                        <option value="M" selected="@(Model.Sexo == "M")">Masculino</option>
+                                        <option value="F" selected="@(Model.Sexo == "F")">Femenino</option>
+                                    </select>
+                                    <label for="sexo">Sexo</label>
+                                </div>
+                            }
+                            else if (@ViewBag.Action == "Delete")
+                            {
+                                <input type="hidden" asp-for="Uuid" value="@Model.Uuid" />
+
+                                <label for="nombre"><b>Nombre: </b> @Model.Nombre</label><br>
+                                <label for="fechaNacimiento"><b>Fecha de Nacimiento: </b>@Model.FechaNacimiento?.ToString("yyyy-MM-dd")</label><br>
+                                <label for="fechaNacimiento"><b>Sexo: </b>@Model.Sexo</label><br>
+                            }
+                            else if (@ViewBag.Action == "Create")
+                            {
+                                <div class="form-floating">
+                                    <div class="form-floating mb-3 d-flex justify-content-center">
+                                        <input type="text" class="form-control" id="nombre" asp-for="Nombre" placeholder="Ingresar nombre" required>
+                                        <label for="nombre">Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="form-floating mb-3 d-flex justify-content-center">
+                                    <input type="date" class="form-control" id="fechaNacimiento" asp-for="FechaNacimiento">
+                                    <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                                </div>
+                                <div class="form-floating mb-3 d-flex justify-content-center">
+                                    <select class="form-control" id="sexo" asp-for="Sexo">
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                    </select>
+                                    <label for="sexo">Sexo</label>
+                                </div>
+                            }
+
+                            <div class="d-flex justify-content-center">
+                                <button type="submit" class="btn btn-dark btn-sm">@ViewBag.ButtonLabel</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

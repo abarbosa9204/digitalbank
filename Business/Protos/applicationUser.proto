@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "Business";
+
+package applicationUser;
+
+service applicationUsers {
+  rpc RegisterUser (RegisterRequest) returns (RegisterResponse);
+}
+
+message RegisterRequest {
+  string uuid = 1;
+  string Username = 2;
+  string Email = 3;
+  string Password = 4;
+  string PhoneNumber = 5;
+}
+
+message RegisterResponse {
+  string uuid = 1;
+  bool Estado = 2;
+  string Token = 3;
+}

@@ -1,0 +1,47 @@
+﻿@model Presentation.Models.LoginModel
+
+<main>
+    @{
+        ViewData["Title"] = "Autenticación JWT";
+    }
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">@ViewData["Title"]</h2>
+                        @if (TempData["UserMessage"] != null && TempData["UserMessageType"] != null)
+                        {
+                            <div class="alert alert-@(TempData["UserMessageType"]) fade show" role="alert" id="userMessage">
+                                @TempData["UserMessage"]
+                            </div>
+                        }
+                        <form asp-controller="Auth" asp-action="Authenticate" method="post" id="jwtLoginForm">
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input type="email" class="form-control text-lowercase" id="jwtEmail" name="Username" placeholder="E-mail" required>
+                                <label for="jwtEmail" class="text-center">E-mail</label>
+                            </div>
+                            <div class="form-floating mb-3 d-flex justify-content-center">
+                                <input type="password" class="form-control form-control-sm" id="jwtPassword" name="Password" placeholder="Contraseña" required>
+                                <label for="jwtPassword" class="text-center">Contraseña</label>
+                            </div>                           
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark btn-sm">Iniciar Sesión</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    window.addEventListener('load', function () {
+        var tiempoCarga = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        evento('evento_detalle', { accion: 'pagina_completamente_cargada', detalle: 'Autenticar JWT', tiempoCarga: tiempoCarga });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        evento('evento_detalle', { accion: 'pagina_cargada', detalle: 'Autentica JWT' });        
+    });
+</script>

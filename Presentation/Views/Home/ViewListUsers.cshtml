@@ -1,0 +1,77 @@
+﻿@using X.PagedList.Mvc.Core
+@model X.PagedList.IPagedList<Data.Models.Users>
+
+<Authorize>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Lista de Usuarios</li>        
+    </ol>
+</nav>
+<h2>Lista de Usuarios</h2>
+
+@if (TempData["UserMessage"] != null && TempData["UserMessageType"] != null)
+{
+    <div class="alert alert-@TempData["UserMessageType"] fade show" role="alert" id="userMessage">
+        @TempData["UserMessage"]
+    </div>
+}
+<br>
+<div class="text-right">
+    <a href="@Url.Action("ViewUserManage", new { operation = "Create" })" class="btn btn-primary">Crear Usuario</a>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Uuid</th>
+            <th>Nombre</th>
+            <th>Fecha Nacimiento</th>
+            <th>Sexo</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Uuid</td>
+                <td>@user.Nombre</td>
+                    <td>@(user.FechaNacimiento.HasValue ? user.FechaNacimiento.Value.ToString("yyyy-MM-dd") : "")</td>
+                <td>@user.Sexo</td>
+                <td>
+                    <a href="@Url.Action("ViewUserManage", new { operation = "Edit", uuid = user.Uuid })">Editar</a> |
+                    <a href="@Url.Action("ViewUserManage", new { operation = "Delete", uuid = user.Uuid })">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>Mostrando @Model.Count de @Model.TotalItemCount registros</p>
+<div class="text-center">
+    <ul class="pagination">
+        @if (Model.PageCount > 1)
+        {
+            <li class="page-item @(Model.IsFirstPage ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("ViewListUsers", new { pageNumber = Model.PageNumber - 1 })">Anterior</a>
+            </li>
+
+            @for (int i = 1; i <= Model.PageCount; i++)
+            {
+                <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                    <a class="page-link" href="@Url.Action("ViewListUsers", new { pageNumber = i })">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
+                <a class="page-link" href="@Url.Action("ViewListUsers", new { pageNumber = Model.PageNumber + 1 })">Siguiente</a>
+            </li>
+        }
+    </ul>
+</div>
+</Authorize>
+<script>
+    window.addEventListener('load', function () {
+        var tiempoCarga = performance.timing.loadEventEnd - performance.timing.navigationStart;
+        evento('evento_detalle', { accion: 'pagina_completamente_cargada', detalle: 'Lista de usuarios', tiempoCarga: tiempoCarga });
+    });
+</script>
