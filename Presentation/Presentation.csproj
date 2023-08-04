@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="BootstrapBreadcrumbs.Core" Version="1.0.1" />
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
     <PackageReference Include="Google.Cloud.Firestore" Version="3.3.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.38.0" />
     <PackageReference Include="Grpc.AspNetCore.Server" Version="2.55.0" />

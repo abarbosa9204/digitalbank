@@ -8,6 +8,8 @@ using Presentation.Models;
 using System.Diagnostics;
 using X.PagedList;
 using X.PagedList.Web.Common;
+using OfficeOpenXml;
+using System.IO;
 
 namespace Presentation.Controllers
 {
@@ -284,6 +286,29 @@ namespace Presentation.Controllers
                 measurementId = _configuration["Firebase:measurementId"]
             };
             return Json(firebaseConfig);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> ExportToExcel()
+        {
+            try
+            {                
+                var (users, totalRecords) = await _userService.GetUsersPagedAsync(pageNumber: 1, pageSize: int.MaxValue);
+
+                using (var package = new ExcelPackage())
+                {
+                    var worksheet = package.Workbook.Worksheets.Add("Usuarios");
+                    worksheet.Cells.LoadFromCollection(users, true);
+
+                    var excelFile = package.GetAsByteArray();             
+                    return File(excelFile, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "usuarios.xlsx");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener la lista de usuarios para exportar a Excel");
+                return View("Error");
+            }
         }
 
         public IActionResult Error()

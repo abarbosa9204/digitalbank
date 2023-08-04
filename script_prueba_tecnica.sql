@@ -1,44 +1,13 @@
-USE [prueba_tecnica]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_users]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-DROP PROCEDURE [dbo].[sp_users]
-GO
-/****** Object:  StoredProcedure [dbo].[sp_application_user]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-DROP PROCEDURE [dbo].[sp_application_user]
-GO
-ALTER TABLE [dbo].[Users] DROP CONSTRAINT [DF__Users__FechaCrea__4222D4EF]
-GO
-ALTER TABLE [dbo].[Users] DROP CONSTRAINT [DF__Users__Estado__412EB0B6]
-GO
-ALTER TABLE [dbo].[ApplicationUser] DROP CONSTRAINT [DF__Applicatio__Uuid__4D94879B]
-GO
-/****** Object:  Index [IX_Users_Uuid]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-DROP INDEX [IX_Users_Uuid] ON [dbo].[Users]
-GO
-/****** Object:  Index [IDX_ApplicationUser_Uuid]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-DROP INDEX [IDX_ApplicationUser_Uuid] ON [dbo].[ApplicationUser]
-GO
-/****** Object:  Table [dbo].[Users]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[Users]') AND type in (N'U'))
-DROP TABLE [dbo].[Users]
-GO
-/****** Object:  Table [dbo].[ApplicationUser]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ApplicationUser]') AND type in (N'U'))
-DROP TABLE [dbo].[ApplicationUser]
-GO
-USE [master]
-GO
-/****** Object:  Database [prueba_tecnica]    Script Date: 28/08/2023 5:28:23 p. m. ******/
-DROP DATABASE [prueba_tecnica]
-GO
-/****** Object:  Database [prueba_tecnica]    Script Date: 28/08/2023 5:28:23 p. m. ******/
+USE master;
+
+IF DB_ID(N'prueba_tecnica') IS NOT NULL
+BEGIN
+    ALTER DATABASE [prueba_tecnica] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [prueba_tecnica];
+END
+
 CREATE DATABASE [prueba_tecnica]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'prueba_tecnica', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.ABARBOSA\MSSQL\DATA\prueba_tecnica.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'prueba_tecnica_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.ABARBOSA\MSSQL\DATA\prueba_tecnica_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+
 GO
 ALTER DATABASE [prueba_tecnica] SET COMPATIBILITY_LEVEL = 160
 GO
@@ -115,7 +84,7 @@ ALTER DATABASE [prueba_tecnica] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CL
 GO
 USE [prueba_tecnica]
 GO
-/****** Object:  Table [dbo].[ApplicationUser]    Script Date: 28/08/2023 5:28:23 p. m. ******/
+/****** Object:  Table [dbo].[ApplicationUser]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +102,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 28/08/2023 5:28:23 p. m. ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -199,13 +168,13 @@ INSERT [dbo].[Users] ([Id], [Uuid], [Nombre], [FechaNacimiento], [Sexo], [Estado
 GO
 SET IDENTITY_INSERT [dbo].[Users] OFF
 GO
-/****** Object:  Index [IDX_ApplicationUser_Uuid]    Script Date: 28/08/2023 5:28:24 p. m. ******/
+/****** Object:  Index [IDX_ApplicationUser_Uuid]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IDX_ApplicationUser_Uuid] ON [dbo].[ApplicationUser]
 (
 	[Uuid] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 GO
-/****** Object:  Index [IX_Users_Uuid]    Script Date: 28/08/2023 5:28:24 p. m. ******/
+/****** Object:  Index [IX_Users_Uuid]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 CREATE UNIQUE NONCLUSTERED INDEX [IX_Users_Uuid] ON [dbo].[Users]
 (
 	[Uuid] ASC
@@ -217,7 +186,7 @@ ALTER TABLE [dbo].[Users] ADD  DEFAULT ((1)) FOR [Estado]
 GO
 ALTER TABLE [dbo].[Users] ADD  DEFAULT (getdate()) FOR [FechaCreacion]
 GO
-/****** Object:  StoredProcedure [dbo].[sp_application_user]    Script Date: 28/08/2023 5:28:24 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_application_user]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -243,11 +212,11 @@ BEGIN
             INSERT INTO ApplicationUser (Uuid, Nombre, Email, PasswordHash, Telefono)
             VALUES (@Uuid, @Nombre, @Email, @PasswordHash, @Telefono)
             SET @RegistroCreado = 1;
-            SET @Uuid = @Uuid; 
+            SET @Uuid = @Uuid; -- Asignar el UUID recién creado al parámetro de salida
         END TRY
         BEGIN CATCH
             SET @RegistroCreado = 0;
-            SET @Uuid = NULL; 
+            SET @Uuid = NULL; -- Si no se pudo crear el registro, el UUID será NULL
         END CATCH
     END
     ELSE IF @Accion = 'R'
@@ -289,11 +258,11 @@ BEGIN
             WHERE Uuid = @Uuid;
 
             SET @RegistroActualizado = 1;
-            SET @Uuid = @Uuid; 
+            SET @Uuid = @Uuid; -- Asignar el UUID al parámetro de salida
         END TRY
         BEGIN CATCH
             SET @RegistroActualizado = 0;
-            SET @Uuid = NULL; 
+            SET @Uuid = NULL; -- Si no se pudo actualizar el registro, el UUID será NULL
         END CATCH
     END
     ELSE IF @Accion = 'D'
@@ -301,16 +270,16 @@ BEGIN
         BEGIN TRY
             DELETE FROM ApplicationUser WHERE Uuid = @Uuid;
             SET @RegistroEliminado = 1;
-            SET @Uuid = @Uuid;
+            SET @Uuid = @Uuid; -- Asignar el UUID al parámetro de salida
         END TRY
         BEGIN CATCH
             SET @RegistroEliminado = 0;
-            SET @Uuid = NULL; 
+            SET @Uuid = NULL; -- Si no se pudo eliminar el registro, el UUID será NULL
         END CATCH
     END
 END
 GO
-/****** Object:  StoredProcedure [dbo].[sp_users]    Script Date: 28/08/2023 5:28:24 p. m. ******/
+/****** Object:  StoredProcedure [dbo].[sp_users]    Script Date: 4/08/2023 11:58:16 a. m. ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
